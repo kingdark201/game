@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import bg from '../assets/nha.png';
 import co from '../assets/co.png';
 import dienthoai from '../assets/dienthoai.png';
+import cay from '../assets/cay.png';
 
 import hsk1 from '../assets/ongnoi1.jpg';
 import hsk2 from '../assets/ongnoi2.jpg';
@@ -87,6 +88,7 @@ function Home() {
       <div className='background'>
         <img className='image-background' src={bg} alt='bg' />
         <img className='image-grass' src={co} alt='bgrass' />
+        <img className='image-tree' src={cay} alt='tree' />
       </div>
       <div className="slider-container">
         <div className="slider" style={{ transform: `translateX(-${index * 100}%)` }}>
@@ -107,6 +109,7 @@ function Home() {
         <button onClick={prevSlide}><i className="bi bi-arrow-left-circle"></i></button>
         <button onClick={nextSlide}><i className="bi bi-arrow-right-circle"></i></button>
       </div>
+      <p className='tiengtrung'>中文</p>
     </div>
   );
 }
