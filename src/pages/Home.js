@@ -53,7 +53,7 @@ function Home() {
   
     // Phóng to ảnh vào giữa màn hình
     setTimeout(() => {
-      cloneImg.style.left = `${centerX-5}px`;
+      cloneImg.style.left = `${centerX-8}px`;
       cloneImg.style.top = `${centerY}px`;
       cloneImg.style.transform = "scale(2)";
     }, 20);
