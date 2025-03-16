@@ -16,7 +16,7 @@ import './Home.css';
 function Home() {
   const hskImages = [hsk1, hsk2, hsk3, hsk4, hsk5, hsk6];
   const [index, setIndex] = useState(0);
-  const totalSlides = Math.ceil(hskImages.length / 3);
+  const totalSlides = Math.ceil(hskImages.length / 2);
   const navigate = useNavigate();
 
   const nextSlide = () => {
