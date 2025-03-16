@@ -55,7 +55,7 @@ function Home() {
     setTimeout(() => {
       cloneImg.style.left = `${centerX-5}px`;
       cloneImg.style.top = `${centerY}px`;
-      cloneImg.style.transform = "scale(3)";
+      cloneImg.style.transform = "scale(2)";
     }, 20);
   
     // Thu nhỏ ảnh về vị trí cũ sau 1.5 giây
