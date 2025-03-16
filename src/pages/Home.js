@@ -16,7 +16,6 @@ import './Home.css';
 function Home() {
   const hskImages = [hsk1, hsk2, hsk3, hsk4, hsk5, hsk6];
   const [index, setIndex] = useState(0);
-  const [bouncingIdx, setBouncingIdx] = useState(null);
   const totalSlides = Math.ceil(hskImages.length / 3);
   const navigate = useNavigate();
 
@@ -30,24 +29,50 @@ function Home() {
 
   const handleClick = (e, idx) => {
     const img = e.target;
-
+    const body = document.body;
+  
+    // Lấy vị trí ban đầu của ảnh
     const rect = img.getBoundingClientRect();
-    img.style.position = "fixed";
-    img.style.left = `${rect.left}px`;
-    img.style.top = `${rect.top}px`;
   
-    setBouncingIdx(idx);
-  
-    setTimeout(() => {
-      setBouncingIdx(null);
-      img.style.position = "";
-      img.style.left = "";
-      img.style.top = "";
-    }, 3000);
+    // Tạo một bản sao của ảnh
+    const cloneImg = img.cloneNode(true);
+    cloneImg.style.position = "fixed";
+    cloneImg.style.left = `${rect.left}px`;
+    cloneImg.style.top = `${rect.top}px`;
+    cloneImg.style.width = `${rect.width}px`;
+    cloneImg.style.height = `${rect.height}px`;
+    cloneImg.style.zIndex = "1000";
+    cloneImg.style.transition = "transform 1s ease-in-out, left 1s ease-in-out, top 1s ease-in-out";
     
-
-
+    // Thêm clone vào body
+    body.appendChild(cloneImg);
+  
+    // Lấy kích thước màn hình để tính toán vị trí trung tâm
+    const centerX = window.innerWidth / 2 - rect.width / 2;
+    const centerY = window.innerHeight / 2 - rect.height / 2;
+  
+    // Phóng to ảnh vào giữa màn hình
+    setTimeout(() => {
+      cloneImg.style.left = `${centerX-5}px`;
+      cloneImg.style.top = `${centerY}px`;
+      cloneImg.style.transform = "scale(3)";
+    }, 20);
+  
+    // Thu nhỏ ảnh về vị trí cũ sau 1.5 giây
+    setTimeout(() => {
+      cloneImg.style.left = `${rect.left}px`;
+      cloneImg.style.top = `${rect.top}px`;
+      cloneImg.style.transform = "scale(1)";
+    }, 4000);
+  
+    // Xóa ảnh sau animation
+    setTimeout(() => {
+      body.removeChild(cloneImg);
+    }, 5000);
   };
+  
+  
+  
 
   const handleGame = (level, idx) => {
     navigate(`/game/${level}`);
@@ -68,7 +93,7 @@ function Home() {
           {hskImages.map((imgSrc, idx) => (
             <div key={idx} className="slide-item">
               <img 
-                className={`hsk ${bouncingIdx === idx ? 'moving' : ''}`} 
+                className='hsk'
                 src={imgSrc} 
                 alt={`hsk${idx + 1}`} 
                 onClick={(e) => handleClick(e,idx)} 
