@@ -124,7 +124,7 @@
     margin: 0 5px;
 }
 
-button {
+.button-container button {
     position: relative;
     top: -100px;
     cursor: pointer;

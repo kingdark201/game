@@ -1,0 +1,67 @@
+/* ModeSelection.css */
+.mode-selection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.bg-selection-mode{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    object-fit: cover;
+}
+
+.mode-selection h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.781));
+}
+
+.mode-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Hiển thị 2 cột */
+    gap: 20px;
+}
+
+.mode-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mode-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.781));
+}
+
+.mode-button {
+    width: 150px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #14065e;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.781));
+}
+
+.mode-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
