@@ -26,6 +26,8 @@ const Game = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [playerName, setPlayerName] = useState("");
   const [isScoreSaved, setIsScoreSaved] = useState(false);
+  const [check, setCheck] = useState(true);
+
 
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(50);
@@ -35,6 +37,8 @@ const Game = () => {
   const [randomImage, setRandomImage] = useState(null);
 
   const navigate = useNavigate();
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
 
   alertify.set("notifier", "position", "top-right");
   alertify.set("notifier", "delay", 2);
@@ -48,16 +52,16 @@ const Game = () => {
     const validStart = Math.max(0, startIndex);
     const validEnd = Math.min(wordsFromExcel.length, endIndex);
     let filteredWords = wordsFromExcel.slice(validStart, validEnd);
-  
+
     // Xáo trộn danh sách từ vựng
     filteredWords = filteredWords.sort(() => Math.random() - 0.5);
-  
+
     if (filteredWords.length > 0) {
       setWords(filteredWords);
       setCurrentWord(filteredWords[0]); // Bắt đầu với từ ngẫu nhiên
     }
   };
-  
+
 
   useEffect(() => {
     const savedProgress = JSON.parse(localStorage.getItem(storageKey));
@@ -95,7 +99,7 @@ const Game = () => {
     }
     const randomIndex = Math.floor(Math.random() * remainingWords.length);
     setCurrentWord(remainingWords[randomIndex]);
-  };  
+  };
 
   const getQuestionText = () => {
     if (!currentWord) return "";
@@ -113,34 +117,37 @@ const Game = () => {
   const checkAnswer = () => {
     if (!currentWord) return;
 
-    let correctAnswers = [];
+    let correctList = [];
     switch (mode) {
       case "hanzi-mean":
       case "pinyin-mean":
-        correctAnswers = currentWord.mean.split(/[,;]\s*/);
+        correctList = currentWord.mean.split(/[,;]\s*/);
         break;
       case "mean-hanzi":
       case "pinyin-hanzi":
-        correctAnswers = [currentWord.hanzi];
+        correctList = [currentWord.hanzi];
         break;
       case "hanzi-pinyin":
       case "mean-pinyin":
-        correctAnswers = [currentWord.pinyin];
+        correctList = [currentWord.pinyin];
         break;
       default:
         break;
     }
 
-    const normalizeText = (text) => removeVietnameseAccents(text);
+    setCorrectAnswers(correctList); // Lưu đáp án đúng vào state
 
+    const normalizeText = (text) => removeVietnameseAccents(text);
     const userAnswers = answer.split(",").map((a) => normalizeText(a));
     const isCorrect = userAnswers.some((ans) =>
-      correctAnswers.some((correct) => normalizeText(correct) === ans)
+      correctList.some((correct) => normalizeText(correct) === ans)
     );
 
     if (isCorrect) {
       alertify.success("✅ Đúng rồi!");
       setScore(score + 10);
+      setShowAnswer(false);
+      setCheck(true);
       setWords((prevWords) => {
         const updatedWords = prevWords.filter((w) => w.hanzi !== currentWord.hanzi);
         setTimeout(() => {
@@ -151,8 +158,8 @@ const Game = () => {
       });
     } else {
       alertify.error("❌ Sai! Hãy thử lại.");
-      setAnswer("");
       setScore(score - 10);
+      setCheck(false);
     }
   };
 
@@ -208,6 +215,13 @@ const Game = () => {
           {randomImage && <img src={randomImage} alt="Random" className="img-random" onClick={handleImage} />}
           <div className="box-menu">
             <p>{score} 💰</p>
+            {!check ? (
+              <button onClick={() => {
+                if (!showAnswer) setScore(score - 5); // Trừ điểm chỉ khi chưa xem
+                setShowAnswer(true);
+              }}>❓</button>
+            ) : ''}
+
             <button onClick={startNewGame}>♻️</button>
           </div>
 
@@ -226,6 +240,10 @@ const Game = () => {
           ) : (
             <>
               <h1 className="question">{getQuestionText()}</h1>
+              {showAnswer && correctAnswers.length > 0 && (
+                <p className="correct-answer">Đáp án đúng: {correctAnswers.join(", ")}</p>
+              )}
+
               <input type="text" value={answer} className="answer-input" onChange={(e) => setAnswer(e.target.value)} placeholder="Nhập câu trả lời..." />
               <button className="check-button" onClick={checkAnswer}>Kiểm tra</button>
             </>
