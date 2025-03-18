@@ -110,6 +110,8 @@
     font-weight: bold;
     color: rgb(26, 6, 73);
     cursor: pointer;
+    background-color: transparent;
+    border: 0;
 }
 
 .hsk-level:hover {

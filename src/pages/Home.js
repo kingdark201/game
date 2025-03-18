@@ -61,7 +61,7 @@ function Home() {
                 alt={`hsk${idx + 1}`} 
                 onClick={(e) => handleClick(e)} 
               />
-              <p className="hsk-level" onClick={() => handleGame(idx + 1, idx)}>HSK {idx + 1}</p>
+              <button className="hsk-level" onClick={() => handleGame(idx + 1, idx)}>HSK {idx + 1}</button>
             </div>
           ))}
         </div>
