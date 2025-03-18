@@ -71,6 +71,10 @@ function Home() {
         <button onClick={nextSlide}><i className="bi bi-arrow-right-circle"></i></button>
       </div>
       <p className='tiengtrung'>中文</p>
+      <div className='box-about'>
+        <button className='about' onClick={()=>navigate('/about')}>⚙️</button>
+        <button className='leaderboard' onClick={()=>navigate('/leaderboard')}>👑</button>
+      </div>
     </div>
   );
 }

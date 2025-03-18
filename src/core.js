@@ -74,6 +74,4 @@ const removeVietnameseAccents = (str) => {
     .trim(); // Xóa khoảng trắng thừa
 };
 
-
-
 export { zoomImage, readExcelFile, removeVietnameseAccents };

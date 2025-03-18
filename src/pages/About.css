@@ -1,0 +1,21 @@
+.about-container{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    bottom: -50%;
+    transform: translateY(50%);
+}
+
+.about-container p{
+    text-align: justify;
+}
+
+.about-container button{
+    background-color: orange;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 8px;
+    margin: 10px 0;
+}
